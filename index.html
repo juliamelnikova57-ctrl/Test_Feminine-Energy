@@ -1,0 +1,562 @@
+
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Тест — Как проявляется ваша женственность сейчас?</title>
+
+  <style>
+    :root{
+      --bg1:#F0B482;   /* песочный */
+      --bg2:#FDFAF6;   /* светлый */
+      --btn:#A57C57;   /* карамельный */
+      --btnHover:#8F694A;
+
+      --text:#1F2328;
+      --muted:#5A5F66;
+
+      --card:#FFFFFFCC;
+      --line:#00000014;
+      --shadow: 0 10px 28px rgba(0,0,0,.12);
+      --radius: 18px;
+
+      --pillBg: rgba(165,124,87,.14);
+      --pillText: #7F5E43;
+
+      --ctaBg: #F8E7D7;               /* светлый песочный для CTA-блока */
+      --ctaBorder: rgba(165,124,87,.55); /* карамельная рамка */
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 22px 14px;
+    }
+
+    .wrap{ width:100%; max-width: 520px; }
+
+    .card{
+      background: var(--card);
+      backdrop-filter: blur(6px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 16px;
+    }
+
+    header h1{
+      margin: 0 0 10px 0;
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: .2px;
+    }
+
+    .intro{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14.5px;
+      line-height: 1.55;
+    }
+
+    .divider{
+      height:1px;
+      background: var(--line);
+      margin: 14px 0;
+    }
+
+    .toprow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      margin: 10px 0 12px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--pillBg);
+      color: var(--pillText);
+      font-weight: 700;
+      font-size: 13.5px;
+      line-height: 1;
+      border: 1px solid rgba(165,124,87,.18);
+      white-space: nowrap;
+    }
+
+    .qmeta{
+      display:flex;
+      gap:10px;
+      align-items:baseline;
+      justify-content:space-between;
+      margin-bottom: 10px;
+    }
+    .qnum{
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--btn);
+      letter-spacing: .2px;
+    }
+    .qhint{
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    .question{
+      margin: 0 0 10px 0;
+      font-size: 16px;
+      line-height: 1.35;
+      font-weight: 800;
+    }
+
+    .hintline{
+      margin: 0 0 12px 0;
+      color: var(--muted);
+      font-size: 13.8px;
+      line-height: 1.45;
+      display:flex;
+      gap: 8px;
+      align-items:flex-start;
+    }
+    .hintline .dot{
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      background: rgba(165,124,87,.16);
+      border: 1px solid rgba(165,124,87,.18);
+      flex: 0 0 18px;
+      margin-top: 2px;
+    }
+
+    .answers{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style:none;
+    }
+
+    .answer-btn{
+      width:100%;
+      text-align:left;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 12px 12px;
+      font-size: 15px;
+      line-height: 1.35;
+      cursor:pointer;
+      padding-right: 40px;
+      position: relative;
+      transition: transform .06s ease, border-color .15s ease, box-shadow .15s ease;
+      touch-action: manipulation;
+    }
+    .answer-btn:active{ transform: scale(.99); }
+    .answer-btn:hover{ box-shadow: 0 8px 18px rgba(0,0,0,.08); }
+    .answer-btn[aria-pressed="true"]{
+      border-color: rgba(165,124,87,.55);
+      box-shadow: 0 10px 22px rgba(165,124,87,.18);
+      outline: none;
+    }
+    .answer-btn[aria-pressed="true"]::after{
+      content:"✓";
+      position:absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(165,124,87,.12);
+      color: var(--btn);
+      font-weight: 900;
+    }
+
+    .nav{
+      margin-top: 14px;
+      display:flex;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .btn{
+      border:0;
+      border-radius: 14px;
+      background: var(--btn);
+      color: #fff;
+      padding: 11px 14px;
+      font-size: 14.5px;
+      font-weight: 800;
+      cursor:pointer;
+      touch-action: manipulation;
+      transition: background .15s ease, transform .06s ease;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height: 44px;
+    }
+    .btn:hover{ background: var(--btnHover); }
+    .btn:active{ transform: scale(.99); }
+
+    .btn.secondary{
+      background: transparent;
+      color: var(--btn);
+      border: 1px solid rgba(165,124,87,.45);
+    }
+    .btn.secondary:hover{ background: rgba(165,124,87,.08); }
+
+    .fade{ animation: fade .18s ease both; }
+    @keyframes fade{
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-title{
+      margin: 0 0 10px 0;
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+    .result-text{
+      margin: 0 0 10px 0;
+      font-size: 14.8px;
+      line-height: 1.55;
+      color: var(--text);
+    }
+
+    /* CTA блок — выделенный */
+    .cta{
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      background: var(--ctaBg);
+      border: 1px solid var(--ctaBorder);
+    }
+    .cta p{
+      margin:0 0 10px 0;
+      font-size: 14.6px;
+      line-height: 1.55;
+      color: var(--text);
+    }
+    .cta p:last-child{ margin-bottom: 0; }
+
+    .footer-actions{
+      margin-top: 12px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .sr-only{
+      position:absolute;
+      width:1px;height:1px;
+      padding:0;margin:-1px;
+      overflow:hidden;clip:rect(0,0,0,0);
+      white-space:nowrap;border:0;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <section class="card fade" id="app" aria-live="polite"></section>
+  </main>
+
+  <script>
+    const TG_DM_URL = "https://t.me/Yuliya_Pechenenko_1987";
+
+    const testTitle = "Тест: «Как проявляется ваша женственность сейчас?»";
+    const introLines = [
+      "Этот тест — не про “правильно / неправильно”.",
+      "Он про то, как вы сейчас чувствуете себя в своей женской энергии, мягкости и опоре на себя.",
+      "Ответьте честно — здесь нет «лучших» ответов."
+    ];
+
+    const questionHints = [
+      "Небольшая подсказка: вспомните, как чаще бывает в последние 3–5 дней, а не в «идеальный» день.",
+      "Подсказка: отметьте ваш самый частый сценарий, даже если он вам не нравится — это уже честный шаг к себе.",
+      "Подсказка: выберите то, что ощущается ближе сейчас — без объяснений и оправданий.",
+      "Подсказка: представьте, как вы разговариваете с собой в трудный момент — какие слова звучат первыми?",
+      "Подсказка: ориентируйтесь на внутреннее ощущение — что для вас женственность именно в этом периоде жизни.",
+      "Подсказка: подумайте, как вы замечаете тело в течение дня — скорее «вспоминаете» о нём или «живёте» в контакте?",
+      "Подсказка: выберите фразу, которая откликается эмоционально — даже если разум спорит."
+    ];
+
+    const questions = [
+      {
+        q: "Как вы чаще всего относитесь к своим чувствам?",
+        a: [
+          { key: "A", text: "Я стараюсь их не показывать и держать под контролем" },
+          { key: "B", text: "Я замечаю свои чувства, но не всегда понимаю, что с ними делать" },
+          { key: "C", text: "Я прислушиваюсь к себе и стараюсь бережно проживать эмоции" }
+        ]
+      },
+      {
+        q: "Когда вы устаете, вы чаще всего…",
+        a: [
+          { key: "A", text: "Продолжаете делать «надо», даже через силу" },
+          { key: "B", text: "Иногда позволяете себе паузу, но с чувством вины" },
+          { key: "C", text: "Стараетесь вовремя остановиться и восстановиться" }
+        ]
+      },
+      {
+        q: "Как вы относитесь к помощи от других?",
+        a: [
+          { key: "A", text: "Мне сложно принимать помощь, проще всё самой" },
+          { key: "B", text: "Я принимаю помощь, если очень нужно" },
+          { key: "C", text: "Я спокойно позволяю себе опираться на других" }
+        ]
+      },
+      {
+        q: "Ваше отношение к себе в сложные периоды — какое оно?",
+        a: [
+          { key: "A", text: "Я скорее требовательна и критикую себя" },
+          { key: "B", text: "Иногда поддерживаю себя, иногда — нет" },
+          { key: "C", text: "Я стараюсь быть к себе мягкой и поддерживающей" }
+        ]
+      },
+      {
+        q: "Что для вас сейчас женственность?",
+        a: [
+          { key: "A", text: "Что-то далёкое, на что пока нет ресурса" },
+          { key: "B", text: "Состояние, к которому я только приближаюсь" },
+          { key: "C", text: "Мой внутренний ресурс и способ быть собой" }
+        ]
+      },
+      {
+        q: "Как вы чувствуете своё тело?",
+        a: [
+          { key: "A", text: "Скорее как инструмент, который должен работать" },
+          { key: "B", text: "Иногда замечаю сигналы тела" },
+          { key: "C", text: "Я стараюсь слышать тело и заботиться о нём" }
+        ]
+      },
+      {
+        q: "Когда вы думаете о себе, что откликается больше?",
+        a: [
+          { key: "A", text: "«Я держусь»" },
+          { key: "B", text: "«Я учусь быть мягче к себе»" },
+          { key: "C", text: "«Мне можно быть разной — и это нормально»" }
+        ]
+      }
+    ];
+
+    const results = {
+      A: {
+        title: "🌱 Результат 1. Женственность сейчас приглушена",
+        text: [
+          "Это не минус и не ошибка.",
+          "Скорее всего, вы долго опирались на силу, контроль и ответственность.",
+          "Женственность в этом состоянии не исчезает — она просто ждёт, когда ей станет безопасно проявляться.",
+          "💬 Сейчас для вас особенно важны бережность к себе, отдых и разрешение не быть сильной всегда."
+        ]
+      },
+      B: {
+        title: "🌿 Результат 2. Женственность в процессе раскрытия",
+        text: [
+          "Вы уже слышите себя, но иногда сомневаетесь, можно ли быть мягче и спокойнее.",
+          "Внутри есть запрос на баланс между «надо» и «хочу».",
+          "💬 Вы на важном этапе — когда забота о себе становится не слабостью, а опорой."
+        ]
+      },
+      C: {
+        title: "🌸 Результат 3. Женственность как ресурс",
+        text: [
+          "Вы хорошо чувствуете себя, свои границы и потребности.",
+          "В вашей мягкости есть внутренняя сила, а в заботе о себе — зрелость.",
+          "💬 Это состояние, которое не про идеал, а про честность и контакт с собой."
+        ]
+      }
+    };
+
+    // состояние
+    let step = 0; // сразу первый вопрос на первой странице
+    const answers = Array(questions.length).fill(null); // 'A' | 'B' | 'C'
+    const app = document.getElementById("app");
+
+    function renderQuestion(){
+      const i = step;
+      const q = questions[i];
+      const chosen = answers[i];
+
+      app.classList.remove("fade"); void app.offsetWidth; app.classList.add("fade");
+
+      const answerButtons = q.a.map((opt, idx) => {
+        const pressed = chosen === opt.key ? "true" : "false";
+        const label = ["A", "B", "C"][idx];
+        return `
+          <li>
+            <button
+              class="answer-btn"
+              type="button"
+              data-key="${opt.key}"
+              aria-pressed="${pressed}"
+            >
+              <span class="sr-only">Вариант ${label}: </span>${escapeHtml(opt.text)}
+            </button>
+          </li>
+        `;
+      }).join("");
+
+      const introBlock = (i === 0)
+        ? `<p class="intro">${escapeHtml(introLines[0])}<br>${escapeHtml(introLines[1])}<br>${escapeHtml(introLines[2])}</p>
+           <div class="divider"></div>`
+        : `<div class="divider"></div>`;
+
+      app.innerHTML = `
+        <header>
+          <h1>${escapeHtml(testTitle)}</h1>
+          ${introBlock}
+        </header>
+
+        <div class="toprow">
+          <div class="pill">7 вопросов • ${i + 1}/${questions.length}</div>
+          <div class="qhint">Выберите один вариант</div>
+        </div>
+
+        <div class="qmeta">
+          <div class="qnum">Вопрос ${i + 1} из ${questions.length}</div>
+          <div class="qhint"></div>
+        </div>
+
+        <p class="question">${escapeHtml(q.q)}</p>
+
+        <p class="hintline">
+          <span class="dot" aria-hidden="true"></span>
+          <span>${escapeHtml(questionHints[i])}</span>
+        </p>
+
+        <ul class="answers">
+          ${answerButtons}
+        </ul>
+
+        <div class="nav">
+          ${i === 0
+            ? `<span></span>`
+            : `<button class="btn secondary" id="backBtn" type="button">Назад</button>`
+          }
+          <span></span>
+        </div>
+      `;
+
+      // выбор ответа -> сохранить -> авто переход
+      app.querySelectorAll(".answer-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const key = btn.getAttribute("data-key");
+          answers[i] = key;
+
+          if (i === questions.length - 1) {
+            renderResult();
+          } else {
+            step += 1;
+            renderQuestion();
+          }
+        });
+      });
+
+      const backBtn = document.getElementById("backBtn");
+      if (backBtn){
+        backBtn.addEventListener("click", () => {
+          step -= 1;
+          renderQuestion();
+        });
+      }
+    }
+
+    function computeResultKey(){
+      if (answers.some(v => v === null)) return null;
+
+      const counts = {A:0, B:0, C:0};
+      answers.forEach(k => counts[k]++);
+
+      const max = Math.max(counts.A, counts.B, counts.C);
+      const winners = Object.keys(counts).filter(k => counts[k] === max);
+
+      // если лидер один — он и результат
+      // если лидеров несколько — по правилу показываем B (средний)
+      if (winners.length === 1) return winners[0];
+      return "B";
+    }
+
+    function renderResult(){
+      const key = computeResultKey();
+      if (!key){
+        alert("Пожалуйста, ответьте на все вопросы, чтобы увидеть результат.");
+        step = answers.findIndex(v => v === null);
+        if (step < 0) step = 0;
+        renderQuestion();
+        return;
+      }
+
+      const r = results[key];
+
+      app.classList.remove("fade"); void app.offsetWidth; app.classList.add("fade");
+
+      const paragraphs = r.text.map(t => `<p class="result-text">${escapeHtml(t)}</p>`).join("");
+
+      app.innerHTML = `
+        <header>
+          <h1>${escapeHtml(testTitle)}</h1>
+        </header>
+
+        <div class="divider"></div>
+
+        <h2 class="result-title">${escapeHtml(r.title)}</h2>
+        ${paragraphs}
+
+        <div class="cta">
+          <p>
+            Если вам было интересно это небольшое исследование,<br>
+            в закрытом клубе «Дар-птица» я делюсь мыслями и практиками<br>
+            о бережном отношении к себе и внутренней опоре.
+          </p>
+          <p>
+            Там — больше мягких размышлений и поддержки для женщин.
+          </p>
+          <p>
+            Буду рада видеть вас в пространстве клуба.
+          </p>
+
+          <div class="footer-actions">
+            <a class="btn" href="${TG_DM_URL}" target="_blank" rel="noopener noreferrer">Написать в л/с</a>
+            <button class="btn secondary" id="restartBtn" type="button">Пройти ещё раз</button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("restartBtn").addEventListener("click", () => {
+        for (let i = 0; i < answers.length; i++) answers[i] = null;
+        step = 0;
+        renderQuestion();
+      });
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // старт — сразу 1-й вопрос на первой странице
+    renderQuestion();
+  </script>
+</body>
+</html>
