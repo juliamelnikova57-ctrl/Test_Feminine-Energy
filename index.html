@@ -413,10 +413,22 @@
         `;
       }).join("");
 
-      const introBlock = (i === 0)
-        ? `<p class="intro">${escapeHtml(introLines[0])}<br>${escapeHtml(introLines[1])}<br>${escapeHtml(introLines[2])}</p>
-           <div class="divider"></div>`
-        : `<div class="divider"></div>`;
+  const introBlock = (i === 0)
+  ? `
+     <div class="hero-photo">
+       <img src="hero.jpg" alt="Образ женственности">
+     </div>
+
+     <p class="intro">
+       ${escapeHtml(introLines[0])}<br>
+       ${escapeHtml(introLines[1])}<br>
+       ${escapeHtml(introLines[2])}
+     </p>
+
+     <div class="divider"></div>
+    `
+  : `<div class="divider"></div>`;
+
 
       app.innerHTML = `
         <header>
